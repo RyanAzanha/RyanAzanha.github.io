@@ -544,7 +544,7 @@
     display: block;
     margin-bottom: 0.35rem;
   }
-  .lab h4 { margin: 0 0 0.3rem; font-size: 0.92rem; font-weight: 600; }
+  .lab h3 { margin: 0 0 0.3rem; font-size: 0.92rem; font-weight: 600; }
   .lab p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.45; }
 
   /* ---- certs ---- */
@@ -898,42 +898,42 @@
     <div class="labs" id="labGrid">
     <div class="lab">
       <span class="cls">Linux / Enumeração</span>
-      <h4>Fundamentos de Linux</h4>
+      <h3>Fundamentos de Linux</h3>
       <p>Orientação em um sistema sem interface: listagem, arquivos ocultos por convenção, permissões e reconhecimento de conteúdo codificado versus cifrado.</p>
     </div>
     <div class="lab">
       <span class="cls">Content Discovery</span>
-      <h4>Descoberta de conteúdo web</h4>
+      <h3>Descoberta de conteúdo web</h3>
       <p>Levantamento de superfície: mapeamento de recursos e diretórios do servidor que não são referenciados por nenhum link da página inicial.</p>
     </div>
     <div class="lab">
       <span class="cls">Recon → Foothold</span>
-      <h4>Do scan ao acesso</h4>
+      <h3>Do scan ao acesso</h3>
       <p>Enumeração de serviços de um host legado fora de inventário, identificação do que cada serviço entrega e obtenção de acesso inicial como usuário do servidor web.</p>
     </div>
     <div class="lab">
       <span class="cls">SQL Injection</span>
-      <h4>Extração de banco de dados</h4>
+      <h3>Extração de banco de dados</h3>
       <p>Teste black-box de um e-commerce com consultas ao banco mal construídas, levando à extração de dados via injeção de SQL.</p>
     </div>
     <div class="lab">
       <span class="cls">XSS / Sessão</span>
-      <h4>Roubo de sessão</h4>
+      <h3>Roubo de sessão</h3>
       <p>Mural público sem sanitização de entrada: exploração de Cross-Site Scripting para alcançar uma área administrativa protegida apenas por cookie.</p>
     </div>
     <div class="lab">
       <span class="cls">Path Traversal</span>
-      <h4>Leitura de arquivos do servidor</h4>
+      <h3>Leitura de arquivos do servidor</h3>
       <p>Parâmetro que aceita nome de arquivo sem validação: travessia de diretório para ler conteúdo fora da pasta pretendida.</p>
     </div>
     <div class="lab">
       <span class="cls">Rede interna</span>
-      <h4>Pivô para a rede interna</h4>
+      <h3>Pivô para a rede interna</h3>
       <p>A partir de um servidor com saída para a internet, alcance de um painel de operações em rede sem rota externa — que não deveria ser acessível.</p>
     </div>
     <div class="lab">
       <span class="cls">Broken Access / IDOR</span>
-      <h4>Controle de acesso na API</h4>
+      <h3>Controle de acesso na API</h3>
       <p>Teste autenticado de uma API: a interface só mostra ações sobre o que é do usuário, mas o back-end não valida a autorização da mesma forma.</p>
     </div>
     </div>
@@ -1384,7 +1384,7 @@ function render() {
   document.getElementById("labGrid").innerHTML = LABS.map(l => `
     <div class="lab">
       <span class="cls">${lang === "pt" ? l.cls : l.clsEn}</span>
-      <h4>${l[lang].t}</h4>
+      <h3>${l[lang].t}</h3>
       <p>${l[lang].d}</p>
     </div>`).join("");
 

@@ -35,6 +35,10 @@ Todo o texto fica no `<script>` do final do `index.html`:
 | Formação | `EDU` |
 | Certificações e trilha | `CERT_DONE` e `ROADMAP` |
 
+O conteúdo em português também está escrito direto no HTML (para o site ler completo sem JavaScript e não "pular" ao carregar). O JavaScript sobrescreve tudo ao carregar e ao trocar de idioma, então ao mudar um texto nos dados acima, atualize também o trecho em PT correspondente no HTML (textos com `data-i` e as listas dentro de `#bridge`, `#fund`, `#tl`, `#proj`, `#labGrid`, `#edu`, `#certDone` e `#road`).
+
+Imagens ficam em `assets/` (versões otimizadas em WebP com fallback em JPG; os arquivos `*-original.*` não vão para o repositório).
+
 Ao concluir uma certificação: mova-a de `ROADMAP` para `CERT_DONE` e marque a próxima como `status: "now"`.
 
 ## Domínio próprio (opcional)

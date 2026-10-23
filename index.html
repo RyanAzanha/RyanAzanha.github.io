@@ -9,7 +9,10 @@
 <title>Ryan Azanha</title>
 <!-- favicon: prompt de terminal nas cores do site, SVG inline (sem requisição extra) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%230c0f0d'/%3E%3Cg%20fill='none'%20stroke='%234bd08a'%20stroke-width='2.6'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M9%2011l5%205-5%205'/%3E%3Cpath%20d='M17.5%2021H24'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap"></noscript>
 <style>
   /* Layout: single-column reading spine, left-rule timeline, terminal-accented section eyebrows */
   :root {
@@ -18,7 +21,7 @@
     --surface-2: #eceee9;
     --fg: #1a1d1a;
     --muted: #596158;
-    --faint: #878f85;
+    --faint: #6b7369;
     --rule: #d7dad3;
     --accent: #1f7a52;
     --accent-soft: #e3efe7;
@@ -36,7 +39,7 @@
       --surface-2: #1b201c;
       --fg: #e7eae5;
       --muted: #9aa49a;
-      --faint: #6b746b;
+      --faint: #858e85;
       --rule: #272d27;
       --accent: #4bd08a;
       --accent-soft: #15241b;
@@ -52,7 +55,7 @@
     --surface-2: #1b201c;
     --fg: #e7eae5;
     --muted: #9aa49a;
-    --faint: #6b746b;
+    --faint: #858e85;
     --rule: #272d27;
     --accent: #4bd08a;
     --accent-soft: #15241b;
@@ -189,11 +192,9 @@
   }
   .lang button[aria-pressed="true"] {
     background: var(--accent);
-    color: #04140c;
+    color: var(--on-accent);
     font-weight: 600;
   }
-  :root[data-theme="dark"] .lang button[aria-pressed="true"],
-  :root:not([data-theme="light"]) .lang button[aria-pressed="true"] { color: #04140c; }
 
   /* ---- hero ---- */
   .hero { padding-block: clamp(2.5rem, 7vw, 4.5rem) 2rem; }
@@ -744,11 +745,11 @@
 
 <main class="wrap">
   <section class="hero" style="border-top:0">
-    <div class="eyebrow" data-i="hero.eyebrow"></div>
+    <div class="eyebrow" data-i="hero.eyebrow">Analista de IAM · Pentest / Red Team</div>
     <h1>Ryan Azanha</h1>
     <p class="term"><span class="prompt" aria-hidden="true">ryan@azanha:~$</span><span class="typed" id="typed" aria-hidden="true">Analista de IAM / IGA · Pentest / Red Team · Automação de Segurança</span><span class="caret" aria-hidden="true"></span><span class="sr-only" data-i="hero.termAll">Analista de IAM / IGA · Pentest / Red Team · Automação de Segurança</span></p>
-    <p class="role" data-i="hero.role"></p>
-    <p class="lead" data-i="hero.lead"></p>
+    <p class="role" data-i="hero.role">Protejo identidades e acessos com o olhar de quem sabe <b>atacá-los</b></p>
+    <p class="lead" data-i="hero.lead">Analista de Segurança da Informação com experiência prática em Gestão de Identidades e Acessos e formação em segurança ofensiva. Administrei identidades e acessos privilegiados em ambientes multi-cloud com SailPoint, CyberArk, Active Directory, Entra ID (PIM), AWS, GCP e IBM Cloud, e automatizei fluxos de IAM com Python, PowerShell e Microsoft Graph API: mais de 2.000 chamados com +60% de eficiência e uma fila de 100+ chamados zerada em poucas semanas. No lado ofensivo, tenho um relatório de pentest completo, laboratórios práticos e uma trilha de certificações rumo à OSCP.</p>
     <div class="links">
       <a class="chip" href="https://www.linkedin.com/in/ryan-azanha" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.82-2.05 3.75-2.05 4 0 4.75 2.63 4.75 6.05V21H19v-5.3c0-1.26-.02-2.9-1.76-2.9-1.76 0-2.03 1.37-2.03 2.8V21H9z"/></svg>
@@ -772,20 +773,31 @@
   </div>
 
   <section id="about">
-    <div class="sec-head"><span class="sec-no">01</span><h2 data-i="about.h"></h2></div>
+    <div class="sec-head"><span class="sec-no">01</span><h2 data-i="about.h">Perfil</h2></div>
     <div class="about-top">
-      <p class="sec-intro" data-i="about.p"></p>
+      <p class="sec-intro" data-i="about.p">IAM e segurança ofensiva olham para o mesmo alvo. Boa parte dos ataques reais passa por identidade: credenciais expostas, privilégios em excesso, contas esquecidas e RBAC mal desenhado. Como analista de IAM, sei como esses acessos são concedidos e administrados no dia a dia. Como pentester, estudo como eles são explorados. Uma frente melhora a outra.</p>
       <figure class="about-media">
         <picture>
-          <source srcset="assets/setup.webp" type="image/webp">
+          <source srcset="assets/setup-600.webp 600w, assets/setup.webp 900w" sizes="(min-width: 720px) 23rem, calc(100vw - 40px)" type="image/webp">
           <img src="assets/setup.jpg" width="900" height="600" loading="lazy" decoding="async" data-i-alt="about.imgAlt" alt="Ryan Azanha no seu setup de estudos, com monitores mostrando Kali Linux, Nmap e código Python">
         </picture>
       </figure>
     </div>
-    <div class="bridge" id="bridge"></div>
+    <div class="bridge" id="bridge">
+    <div class="side">
+      <span class="k">IAM / IGA</span>
+      <h3>Em um time de IAM</h3>
+      <ul><li>Experiência prática com ciclo de vida de identidades, PAM, RBAC e governança em Azure, AWS, GCP e IBM Cloud.</li><li>Automação de fluxos de acesso com Python, PowerShell e Microsoft Graph API, com ganho real de tempo e de SLA.</li><li>Olhar de atacante ao conceder e revisar acessos: privilégios em excesso, contas sem dono e caminhos de escalonamento.</li></ul>
+    </div>
+    <div class="side">
+      <span class="k">Pentest / Red Team</span>
+      <h3>Em um time ofensivo</h3>
+      <ul><li>Conhecimento por dentro de Active Directory, Entra ID, CyberArk e IAM de nuvem, alvos centrais de escalonamento e movimentação lateral.</li><li>Base em redes, Linux e programação, com laboratórios práticos das principais classes de vulnerabilidade web.</li><li>Relatório de pentest com metodologia NIST SP 800-115 e OWASP, achados em CVSS 3.1 e plano de remediação.</li></ul>
+    </div>
+    </div>
     <div class="about-cols">
       <div class="stack-col">
-        <h3 data-i="about.iam"></h3>
+        <h3 data-i="about.iam">Identidade & Acesso</h3>
         <div class="tags">
           <span class="tag">SailPoint</span><span class="tag">CyberArk</span><span class="tag">Active Directory</span>
           <span class="tag">Entra ID / PIM</span><span class="tag">AWS IAM</span><span class="tag">GCP IAM</span>
@@ -793,7 +805,7 @@
         </div>
       </div>
       <div class="stack-col">
-        <h3 data-i="about.off"></h3>
+        <h3 data-i="about.off">Ofensivo</h3>
         <div class="tags">
           <span class="tag">Nmap</span><span class="tag">Burp Suite</span><span class="tag">Netcat / Ncat</span>
           <span class="tag">Hydra</span><span class="tag">John / Hashcat</span><span class="tag">Kali Linux</span>
@@ -804,42 +816,193 @@
   </section>
 
   <section id="fundamentals">
-    <div class="sec-head"><span class="sec-no">02</span><h2 data-i="fund.h"></h2></div>
-    <p class="sec-intro" data-i="fund.p"></p>
-    <div class="fund" id="fund"></div>
+    <div class="sec-head"><span class="sec-no">02</span><h2 data-i="fund.h">Fundamentos</h2></div>
+    <p class="sec-intro" data-i="fund.p">Base sólida nos fundamentos de segurança da informação, construída em três frentes: formação acadêmica, cursos especializados e prática no trabalho.</p>
+    <div class="fund" id="fund">
+    <div class="fund-card">
+      <h3>Redes de Computadores</h3>
+      <p>Modelo TCP/IP, endereçamento, roteamento, NAT e serviços de rede, aplicados à enumeração de hosts e à comunicação entre máquinas com Netcat, Ncat e Socat.</p>
+      <div class="src-list"><span class="tag">Alura · Formação Redes</span><span class="tag">FIAP</span><span class="tag">Solyd · Redes para Pentest</span></div>
+    </div>
+    <div class="fund-card">
+      <h3>Linux</h3>
+      <p>Operação pela linha de comando: sistema de arquivos, permissões, usuários, processos e automação com Shell Script voltada a pentest.</p>
+      <div class="src-list"><span class="tag">Alura · Começando em Linux</span><span class="tag">FIAP</span><span class="tag">Solyd · Linux e Shell Script para Pentesters</span></div>
+    </div>
+    <div class="fund-card">
+      <h3>Programação</h3>
+      <p>Dois anos de graduação em Análise e Desenvolvimento de Sistemas, Python e Shell Script em ferramentas próprias e automações reais em produção com Python, PowerShell e Microsoft Graph API.</p>
+      <div class="src-list"><span class="tag">FIAP · ADS</span><span class="tag">Solyd · Python e Algoritmos</span><span class="tag">Automações de IAM em produção</span></div>
+    </div>
+    <div class="fund-card">
+      <h3>Segurança da Informação</h3>
+      <p>Pilares da SI, gestão de vulnerabilidades, criptografia, hash e senhas, controle de acesso e frameworks como NIST SP 800-115, OWASP e CVSS.</p>
+      <div class="src-list"><span class="tag">FIAP · Defesa Cibernética</span><span class="tag">Solyd · Criptografia e Senhas</span><span class="tag">Estudo CompTIA Security+</span></div>
+    </div>
+    </div>
   </section>
 
   <section id="experience">
-    <div class="sec-head"><span class="sec-no">03</span><h2 data-i="exp.h"></h2></div>
-    <div class="tl" id="tl"></div>
+    <div class="sec-head"><span class="sec-no">03</span><h2 data-i="exp.h">Experiência</h2></div>
+    <div class="tl" id="tl">
+    <div class="job">
+      <div class="when">jul 2026 — out 2026</div>
+      <h3>Analista de Gestão de Acessos — Projeto NaturaPay</h3>
+      <div class="org">via Verx Tecnologia (PJ)</div>
+      <ul><li>Assumi uma fila com <b>mais de 100 chamados</b> acumulados e, em poucas semanas, criei um fluxo de automação que <b>zerou a fila</b>.</li><li>A demanda, antes de ~40 chamados/dia, passou a ser resolvida com rapidez: chamados <b>não passavam de 1h na fila</b> após aprovação do gestor e da equipe técnica de segurança.</li><li>Gestão de acessos sistêmicos com Azure AD, AWS IAM, Google Cloud e SailPoint, com controle de SLAs via Jira.</li></ul>
+    </div>
+    <div class="job">
+      <div class="when">nov 2025 — ago 2026</div>
+      <h3>Analista de Gestão de Identidades e Acessos II</h3>
+      <div class="org">Strong Security Brasil</div>
+      <ul><li>Atendimento de <b>mais de 2.000 chamados</b> na fila de IAM do Google Cloud Platform, com <b>+60% de eficiência</b> a partir de uma solução de automação desenvolvida do zero em Python, reduzindo o tempo de resposta e garantindo aderência aos SLAs.</li><li>Implementação e gestão de controles de acesso baseados em roles (RBAC) em ambientes GCP, minimizando riscos de acessos indevidos.</li><li>Gestão ponta a ponta de identidades e acessos privilegiados (PAM) com SailPoint, em ambiente multi-cloud: Azure (incluindo PIM), AWS, GCP e IBM Cloud.</li><li>Automações em Python, PowerShell e Microsoft Graph API para fluxos de IAM/IGA, reduzindo esforço manual e tempo de provisionamento/desprovisionamento.</li><li>Suporte técnico de Nível II em demandas de IAM/IGA/PAM e incidentes críticos de identidade e acesso.</li></ul>
+    </div>
+    <div class="job">
+      <div class="when">jul 2024 — fev 2025</div>
+      <h3>Estágio em Segurança da Informação</h3>
+      <div class="org">Cherokee</div>
+      <ul><li>Identificação e remoção de <b>dados sensíveis expostos na internet</b> via técnicas de Google Hacking (OSINT).</li><li>Gestão de vulnerabilidades e atualizações de segurança em endpoints com a plataforma Action1.</li><li>Suporte técnico na análise da <b>infraestrutura exposta</b>.</li><li>Desenvolvimento e avaliação de <b>campanhas de phishing</b>; análise de eventos de DLP.</li><li>Criação e monitoramento de dashboards personalizados no Grafana; gestão de acessos e service desk.</li></ul>
+    </div>
+    </div>
   </section>
 
   <section id="projects">
-    <div class="sec-head"><span class="sec-no">04</span><h2 data-i="proj.h"></h2></div>
-    <div id="proj"></div>
+    <div class="sec-head"><span class="sec-no">04</span><h2 data-i="proj.h">Projetos</h2></div>
+    <div id="proj">
+    <div class="proj">
+      <h3>Relatório de Pentest — Aplicação Web</h3>
+      <p>Pentest completo de uma aplicação web, documentado em relatório profissional e anonimizado. Metodologia NIST SP 800-115 e OWASP, achados classificados por CVSS 3.1, provas de conceito não destrutivas, plano de remediação e critérios de reteste. Publicado no LinkedIn sem expor o cliente.</p>
+      <div class="proj-actions"><a class="chip" href="relatorio-pentest-publico.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16"></path></svg>
+        Baixar relatório (PDF)</a></div>
+      <div class="meta-row"><span class="pill">NIST 800-115</span><span class="pill">OWASP</span><span class="pill">CVSS 3.1</span><span class="pill">Relatório</span></div>
+    </div>
+    <div class="proj">
+      <h3>Automação de fluxos de IAM</h3>
+      <p>Automações construídas do zero para operação de IAM/IGA em cloud. A solução para o shell do GCP, em Python, foi o diferencial que reduziu drasticamente o tempo de atendimento de chamados; outras usam PowerShell e Microsoft Graph API para provisionamento e desprovisionamento de acessos. (Código apresentado em versão genérica, sem dados de cliente.)</p>
+      
+      <div class="meta-row"><span class="pill">Python</span><span class="pill">PowerShell</span><span class="pill">Graph API</span><span class="pill">GCP</span></div>
+    </div>
+    <div class="proj">
+      <h3>Ferramenta de scan de rede em Shell Script</h3>
+      <p>Scanner de rede desenvolvido como projeto prático do curso de pentest, escrito em Shell Script. Enumera hosts e serviços ativos, consolidando o aprendizado de redes, Netcat e automação de linha de comando.</p>
+      
+      <div class="meta-row"><span class="pill">Bash</span><span class="pill">Netcat</span><span class="pill">Enumeração</span></div>
+    </div>
+    </div>
   </section>
 
   <section id="labs">
-    <div class="sec-head"><span class="sec-no">05</span><h2 data-i="labs.h"></h2></div>
-    <p class="sec-intro" data-i="labs.p"></p>
-    <div class="labs" id="labs"></div>
+    <div class="sec-head"><span class="sec-no">05</span><h2 data-i="labs.h">Laboratórios práticos</h2></div>
+    <p class="sec-intro" data-i="labs.p">Oito laboratórios do curso Introdução ao Hacking e Pentest 3.0 (Solyd), cada um focado em uma classe de vulnerabilidade. Resumo das habilidades demonstradas — sem soluções nem flags.</p>
+    <div class="labs" id="labGrid">
+    <div class="lab">
+      <span class="cls">Linux / Enumeração</span>
+      <h4>Fundamentos de Linux</h4>
+      <p>Orientação em um sistema sem interface: listagem, arquivos ocultos por convenção, permissões e reconhecimento de conteúdo codificado versus cifrado.</p>
+    </div>
+    <div class="lab">
+      <span class="cls">Content Discovery</span>
+      <h4>Descoberta de conteúdo web</h4>
+      <p>Levantamento de superfície: mapeamento de recursos e diretórios do servidor que não são referenciados por nenhum link da página inicial.</p>
+    </div>
+    <div class="lab">
+      <span class="cls">Recon → Foothold</span>
+      <h4>Do scan ao acesso</h4>
+      <p>Enumeração de serviços de um host legado fora de inventário, identificação do que cada serviço entrega e obtenção de acesso inicial como usuário do servidor web.</p>
+    </div>
+    <div class="lab">
+      <span class="cls">SQL Injection</span>
+      <h4>Extração de banco de dados</h4>
+      <p>Teste black-box de um e-commerce com consultas ao banco mal construídas, levando à extração de dados via injeção de SQL.</p>
+    </div>
+    <div class="lab">
+      <span class="cls">XSS / Sessão</span>
+      <h4>Roubo de sessão</h4>
+      <p>Mural público sem sanitização de entrada: exploração de Cross-Site Scripting para alcançar uma área administrativa protegida apenas por cookie.</p>
+    </div>
+    <div class="lab">
+      <span class="cls">Path Traversal</span>
+      <h4>Leitura de arquivos do servidor</h4>
+      <p>Parâmetro que aceita nome de arquivo sem validação: travessia de diretório para ler conteúdo fora da pasta pretendida.</p>
+    </div>
+    <div class="lab">
+      <span class="cls">Rede interna</span>
+      <h4>Pivô para a rede interna</h4>
+      <p>A partir de um servidor com saída para a internet, alcance de um painel de operações em rede sem rota externa — que não deveria ser acessível.</p>
+    </div>
+    <div class="lab">
+      <span class="cls">Broken Access / IDOR</span>
+      <h4>Controle de acesso na API</h4>
+      <p>Teste autenticado de uma API: a interface só mostra ações sobre o que é do usuário, mas o back-end não valida a autorização da mesma forma.</p>
+    </div>
+    </div>
   </section>
 
   <section id="education">
-    <div class="sec-head"><span class="sec-no">06</span><h2 data-i="edu.h"></h2></div>
-    <div class="tl" id="edu"></div>
+    <div class="sec-head"><span class="sec-no">06</span><h2 data-i="edu.h">Formação</h2></div>
+    <div class="tl" id="edu">
+    <div class="job">
+      <div class="when">ago 2025 — atual<span class="badge">Cursando</span></div>
+      <h3>Graduação em Defesa Cibernética</h3>
+      <div class="org">FIAP</div>
+      <ul><li>Fundamentos de segurança da informação, Cyber Threat Intelligence e segurança ofensiva. Ao fim do primeiro ano, realizei um pentest completo em aplicação de teste e produzi o relatório profissional.</li></ul>
+    </div>
+    <div class="job">
+      <div class="when">ago 2023 — ago 2025</div>
+      <h3>Análise e Desenvolvimento de Sistemas</h3>
+      <div class="org">FIAP</div>
+      <ul><li>Base em desenvolvimento, lógica de programação e sistemas, que sustenta o lado técnico do trabalho ofensivo e das automações.</li></ul>
+    </div>
+    </div>
   </section>
 
   <section id="certs">
-    <div class="sec-head"><span class="sec-no">07</span><h2 data-i="cert.h"></h2></div>
+    <div class="sec-head"><span class="sec-no">07</span><h2 data-i="cert.h">Certificações e cursos</h2></div>
     <div class="cert-grid">
       <div>
-        <h3 data-i="cert.done"></h3>
-        <ul class="cert-list" id="certDone"></ul>
+        <h3 data-i="cert.done">Concluídos</h3>
+        <ul class="cert-list" id="certDone">
+    <li><span class="mk">▸</span><span>Inglês avançado — leitura, escrita e escuta</span></li>
+    <li><span class="mk">▸</span><span>Identity Governance and Administration Foundation (IGAF) <span class="src">· CEC IAM Academy</span></span></li>
+    <li><span class="mk">▸</span><span>Google Cloud Associate Cloud Engineer <span class="src">· Udemy</span></span></li>
+    <li><span class="mk">▸</span><span>Introdução ao Hacking e Pentest 2.0 e 3.0 <span class="src">· Solyd</span></span></li>
+    <li><span class="mk">▸</span><span>Introdução ao Pentest na Prática · Primeiro Pentest <span class="src">· DESEC</span></span></li>
+    <li><span class="mk">▸</span><span>Formação Segurança Ofensiva <span class="src">· Alura</span></span></li>
+    <li><span class="mk">▸</span><span>Formação Redes de Computadores <span class="src">· Alura</span></span></li>
+    <li><span class="mk">▸</span><span>Formação Começando em Linux <span class="src">· Alura</span></span></li>
+    <li><span class="mk">▸</span><span>Pré-segurança · Cibersegurança <span class="src">· TryHackMe</span></span></li>
+    </ul>
       </div>
       <div>
-        <h3 data-i="cert.road"></h3>
-        <div class="road" id="road"></div>
+        <h3 data-i="cert.road">Trilha em andamento</h3>
+        <div class="road" id="road">
+    <div class="road-step">
+      <span class="idx">01</span>
+      <span><span class="nm">SYCP</span> <span class="src" style="color:var(--faint);font-family:var(--mono);font-size:.72rem">· Solyd Certified Pentester</span></span>
+      <span class="st now">estudando</span>
+    </div>
+    <div class="road-step">
+      <span class="idx">02</span>
+      <span><span class="nm">Security+</span> <span class="src" style="color:var(--faint);font-family:var(--mono);font-size:.72rem">· CompTIA SY0-701</span></span>
+      <span class="st next">próxima</span>
+    </div>
+    <div class="road-step">
+      <span class="idx">03</span>
+      <span><span class="nm">DCPT</span> <span class="src" style="color:var(--faint);font-family:var(--mono);font-size:.72rem">· DESEC Certified Pentester</span></span>
+      <span class="st next">próxima</span>
+    </div>
+    <div class="road-step">
+      <span class="idx">04</span>
+      <span><span class="nm">eJPT</span> <span class="src" style="color:var(--faint);font-family:var(--mono);font-size:.72rem">· INE / eLearnSecurity</span></span>
+      <span class="st next">próxima</span>
+    </div>
+    <div class="road-step">
+      <span class="idx">05</span>
+      <span><span class="nm">OSCP</span> <span class="src" style="color:var(--faint);font-family:var(--mono);font-size:.72rem">· OffSec Certified Professional</span></span>
+      <span class="st next">próxima</span>
+    </div>
+    </div>
       </div>
     </div>
   </section>
@@ -875,7 +1038,7 @@
 <span class="sr-only" aria-live="polite" id="copyStatus"></span>
 
 <footer class="wrap">
-  <div class="foot-note" data-i="foot.note"></div>
+  <div class="foot-note" data-i="foot.note">Portfólio construído por Ryan Azanha. Conteúdo dos projetos corporativos apresentado de forma anonimizada, sem dados, sistemas internos ou credenciais de clientes.</div>
 </footer>
 
 <script>
@@ -1218,7 +1381,7 @@ function render() {
     </div>`).join("");
 
   // labs
-  document.getElementById("labs").innerHTML = LABS.map(l => `
+  document.getElementById("labGrid").innerHTML = LABS.map(l => `
     <div class="lab">
       <span class="cls">${lang === "pt" ? l.cls : l.clsEn}</span>
       <h4>${l[lang].t}</h4>

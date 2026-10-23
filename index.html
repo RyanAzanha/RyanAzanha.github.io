@@ -821,8 +821,8 @@ function render() {
       <div class="src-list">${f[lang].src.map(s => `<span class="tag">${s}</span>`).join("")}</div>
     </div>`).join("");
 
-  // experience: oldest first
-  document.getElementById("tl").innerHTML = [...JOBS].sort((a, b) => a.start.localeCompare(b.start)).map(j => `
+  // experience: most recent first
+  document.getElementById("tl").innerHTML = [...JOBS].sort((a, b) => b.start.localeCompare(a.start)).map(j => `
     <div class="job">
       <div class="when">${j.when[lang]}</div>
       <h3>${j[lang].role}</h3>

@@ -318,6 +318,7 @@
   }
   .proj h3 { margin: 0 0 0.3rem; font-size: 1.12rem; font-weight: 600; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;}
   .proj p { color: var(--muted); margin: 0 0 0.9rem; font-size: 0.96rem; }
+  .proj-actions { margin: 0 0 0.9rem; }
   .meta-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
   .pill {
     font-family: var(--mono);
@@ -629,8 +630,10 @@ const JOBS = [
 const PROJECTS = [
   {
     pt: { title: "Relatório de Pentest — Aplicação Web", desc: "Pentest completo de uma aplicação web, documentado em relatório profissional e anonimizado. Metodologia NIST SP 800-115 e OWASP, achados classificados por CVSS 3.1, provas de conceito não destrutivas, plano de remediação e critérios de reteste. Publicado no LinkedIn sem expor o cliente.",
+      file: { href: "relatorio-pentest-publico.pdf", label: "Baixar relatório (PDF)" },
       tags: ["NIST 800-115", "OWASP", "CVSS 3.1", "Relatório"] },
     en: { title: "Penetration Test Report — Web Application", desc: "Full web-application pentest, documented in a professional, anonymized report. NIST SP 800-115 and OWASP methodology, findings scored with CVSS 3.1, non-destructive proofs of concept, a remediation plan and retest criteria. Published on LinkedIn without exposing the client.",
+      file: { href: "relatorio-pentest-publico.pdf", label: "Download report (PDF)" },
       tags: ["NIST 800-115", "OWASP", "CVSS 3.1", "Report"] }
   },
   {
@@ -785,6 +788,9 @@ function render() {
     <div class="proj">
       <h3>${p[lang].title}</h3>
       <p>${p[lang].desc}</p>
+      ${p[lang].file ? `<div class="proj-actions"><a class="chip" href="${p[lang].file.href}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16"/></svg>
+        ${p[lang].file.label}</a></div>` : ""}
       <div class="meta-row">${p[lang].tags.map(t => `<span class="pill">${t}</span>`).join("")}</div>
     </div>`).join("");
 

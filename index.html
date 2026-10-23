@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Ryan Azanha — Analista de Pentest / Red Team com base em Gestão de Identidades e Acessos (IAM).">
+<meta name="description" content="Ryan Azanha — Analista de IAM e Pentest / Red Team.">
 <meta property="og:title" content="Ryan Azanha">
-<meta property="og:description" content="Analista de Pentest / Red Team · IAM / IGA">
+<meta property="og:description" content="Analista de IAM · Pentest / Red Team">
 <title>Ryan Azanha</title>
 <!-- favicon: prompt de terminal nas cores do site, SVG inline (sem requisição extra) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%230c0f0d'/%3E%3Cg%20fill='none'%20stroke='%234bd08a'%20stroke-width='2.6'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M9%2011l5%205-5%205'/%3E%3Cpath%20d='M17.5%2021H24'/%3E%3C/g%3E%3C/svg%3E">
@@ -255,6 +255,32 @@
     gap: 1.6rem 2rem;
   }
 
+  /* ---- two-sided value ---- */
+  .bridge {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: 0.7rem;
+    margin-bottom: 2rem;
+  }
+  .side {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 1.1rem 1.2rem;
+    min-width: 0;
+  }
+  .side .k {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .side h3 { margin: 0.3rem 0 0.7rem; font-size: 1.02rem; font-weight: 600; }
+  .side ul { margin: 0; padding-left: 1.05rem; color: var(--muted); font-size: 0.9rem; }
+  .side li { margin-bottom: 0.4rem; }
+  .side li:last-child { margin-bottom: 0; }
+
   /* ---- fundamentals ---- */
   .fund {
     display: grid;
@@ -451,6 +477,7 @@
   <section>
     <div class="sec-head"><span class="sec-no">01</span><h2 data-i="about.h"></h2></div>
     <p class="sec-intro" data-i="about.p"></p>
+    <div class="bridge" id="bridge"></div>
     <div class="about-cols">
       <div class="stack-col">
         <h3 data-i="about.iam"></h3>
@@ -525,13 +552,13 @@
 <script>
 const DATA = {
   pt: {
-    "hero.eyebrow": "Analista de Pentest / Red Team",
-    "hero.role": "Segurança ofensiva com base sólida em <b>Gestão de Identidades e Acessos</b>",
-    "hero.lead": "Analista de Pentest e Red Team com background em IAM/IGA. Trabalhei com CyberArk, Active Directory, Entra ID, AWS, GCP, SailPoint, Kafka e Jira em ambientes corporativos multi-cloud — o que me dá uma visão prática de como o acesso é concedido, administrado e, principalmente, de como ele falha. Hoje foco em segurança ofensiva: laboratórios práticos, relatório de pentest completo e uma trilha de certificações em andamento.",
+    "hero.eyebrow": "Analista de IAM · Pentest / Red Team",
+    "hero.role": "Protejo identidades e acessos com o olhar de quem sabe <b>atacá-los</b>",
+    "hero.lead": "Analista de Segurança da Informação com experiência prática em Gestão de Identidades e Acessos e formação em segurança ofensiva. Administrei identidades e acessos privilegiados em ambientes multi-cloud com SailPoint, CyberArk, Active Directory, Entra ID (PIM), AWS, GCP e IBM Cloud, e automatizei fluxos de IAM com Python, PowerShell e Microsoft Graph API: mais de 2.000 chamados com +60% de eficiência e uma fila de 100+ chamados zerada em poucas semanas. No lado ofensivo, tenho um relatório de pentest completo, laboratórios práticos e uma trilha de certificações rumo à OSCP.",
     "btn.copy": "copiar",
     "btn.copied": "copiado ✓",
     "about.h": "Perfil",
-    "about.p": "Quem administrou identidade e acesso privilegiado em escala conhece por dentro os alvos que um time ofensivo mais explora: credenciais, privilégios e movimentação lateral. Uso esse conhecimento dos dois lados — entendo o controle que defendo e o controle que testo.",
+    "about.p": "IAM e segurança ofensiva olham para o mesmo alvo. Boa parte dos ataques reais passa por identidade: credenciais expostas, privilégios em excesso, contas esquecidas e RBAC mal desenhado. Como analista de IAM, sei como esses acessos são concedidos e administrados no dia a dia. Como pentester, estudo como eles são explorados. Uma frente melhora a outra.",
     "about.iam": "Identidade & Acesso",
     "about.off": "Ofensivo",
     "fund.h": "Fundamentos",
@@ -547,13 +574,13 @@ const DATA = {
     "foot.note": "Portfólio construído por Ryan Azanha. Conteúdo dos projetos corporativos apresentado de forma anonimizada, sem dados, sistemas internos ou credenciais de clientes."
   },
   en: {
-    "hero.eyebrow": "Penetration Tester / Red Team Analyst",
-    "hero.role": "Offensive security built on a solid <b>Identity & Access Management</b> foundation",
-    "hero.lead": "Penetration Tester and Red Team analyst with an IAM/IGA background. I've worked with CyberArk, Active Directory, Entra ID, AWS, GCP, SailPoint, Kafka and Jira across multi-cloud enterprise environments — which gives me a hands-on view of how access is granted, managed and, above all, how it breaks. My focus today is offensive security: hands-on labs, a full penetration-test report and an ongoing certification track.",
+    "hero.eyebrow": "IAM Analyst · Pentest / Red Team",
+    "hero.role": "I protect identities and access with the eye of someone who knows how to <b>attack them</b>",
+    "hero.lead": "Information Security analyst with hands-on Identity & Access Management experience and offensive-security training. I've managed identities and privileged access across multi-cloud environments with SailPoint, CyberArk, Active Directory, Entra ID (PIM), AWS, GCP and IBM Cloud, and automated IAM workflows with Python, PowerShell and Microsoft Graph API: 2,000+ tickets handled with a 60% efficiency gain, and a 100+ ticket backlog cleared within weeks. On the offensive side, I bring a full pentest report, hands-on labs and a certification track toward OSCP.",
     "btn.copy": "copy",
     "btn.copied": "copied ✓",
     "about.h": "Profile",
-    "about.p": "Managing identity and privileged access at scale means knowing, from the inside, the very targets an offensive team goes after: credentials, privileges and lateral movement. I bring that knowledge to both sides — I understand the control I defend and the control I test.",
+    "about.p": "IAM and offensive security look at the same target. Many real attacks go through identity: exposed credentials, excessive privileges, forgotten accounts and poorly designed RBAC. As an IAM analyst, I know how that access is granted and managed day to day. As a pentester, I study how it gets exploited. Each side makes me better at the other.",
     "about.iam": "Identity & Access",
     "about.off": "Offensive",
     "fund.h": "Fundamentals",
@@ -739,28 +766,39 @@ const FUND = [
   }
 ];
 
-/* IAM-focused version of the hero, shown at the #iam link */
-const IAM = {
-  pt: {
-    "hero.eyebrow": "Analista de IAM / IGA",
-    "hero.role": "Gestão de Identidades e Acessos com visão de <b>segurança ofensiva</b>",
-    "hero.lead": "Analista de Gestão de Identidades e Acessos com experiência em SailPoint, CyberArk, Active Directory, Entra ID (PIM), AWS, GCP, IBM Cloud, Kafka e Jira em ambientes multi-cloud. Automatizo fluxos de IAM com Python, PowerShell e Microsoft Graph API: mais de 2.000 chamados atendidos com +60% de eficiência e uma fila de 100+ chamados zerada em poucas semanas. A formação em pentest me dá o olhar do atacante sobre onde o acesso costuma falhar.",
-    "about.p": "Conheço identidade dos dois lados. Administro o ciclo de vida de acessos e privilégios e, pela formação em segurança ofensiva, entendo como credenciais expostas, privilégios excessivos e falhas de RBAC são explorados. Isso me ajuda a desenhar e manter controles que resistem a um ataque real."
+/* What each side brings to the other */
+const BRIDGE = [
+  {
+    pt: { k: "IAM / IGA", h: "Em um time de IAM", items: [
+      "Experiência prática com ciclo de vida de identidades, PAM, RBAC e governança em Azure, AWS, GCP e IBM Cloud.",
+      "Automação de fluxos de acesso com Python, PowerShell e Microsoft Graph API, com ganho real de tempo e de SLA.",
+      "Olhar de atacante ao conceder e revisar acessos: privilégios em excesso, contas sem dono e caminhos de escalonamento."
+    ] },
+    en: { k: "IAM / IGA", h: "On an IAM team", items: [
+      "Hands-on experience with identity lifecycle, PAM, RBAC and governance across Azure, AWS, GCP and IBM Cloud.",
+      "Access-workflow automation with Python, PowerShell and Microsoft Graph API, with real gains in time and SLA.",
+      "An attacker's eye when granting and reviewing access: excessive privileges, ownerless accounts and escalation paths."
+    ] }
   },
-  en: {
-    "hero.eyebrow": "IAM / IGA Analyst",
-    "hero.role": "Identity & Access Management with an <b>offensive-security</b> mindset",
-    "hero.lead": "Identity and Access Management analyst with hands-on experience in SailPoint, CyberArk, Active Directory, Entra ID (PIM), AWS, GCP, IBM Cloud, Kafka and Jira across multi-cloud environments. I automate IAM workflows with Python, PowerShell and Microsoft Graph API: 2,000+ tickets handled with a 60% efficiency gain, and a 100+ ticket backlog cleared within weeks. My pentest training gives me an attacker's view of where access tends to break.",
-    "about.p": "I know identity from both sides. I manage the lifecycle of access and privileges and, through my offensive-security training, I understand how exposed credentials, excessive privileges and RBAC gaps get exploited. That helps me design and run controls that hold up against a real attack."
+  {
+    pt: { k: "Pentest / Red Team", h: "Em um time ofensivo", items: [
+      "Conhecimento por dentro de Active Directory, Entra ID, CyberArk e IAM de nuvem, alvos centrais de escalonamento e movimentação lateral.",
+      "Base em redes, Linux e programação, com laboratórios práticos das principais classes de vulnerabilidade web.",
+      "Relatório de pentest com metodologia NIST SP 800-115 e OWASP, achados em CVSS 3.1 e plano de remediação."
+    ] },
+    en: { k: "Pentest / Red Team", h: "On an offensive team", items: [
+      "Inside knowledge of Active Directory, Entra ID, CyberArk and cloud IAM, core targets for privilege escalation and lateral movement.",
+      "Grounding in networking, Linux and programming, with hands-on labs covering the main web vulnerability classes.",
+      "Pentest reporting with NIST SP 800-115 and OWASP methodology, CVSS 3.1 findings and a remediation plan."
+    ] }
   }
-};
+];
 
 let lang = "pt";
-let mode = location.hash === "#iam" ? "iam" : "pentest";
 
 function render() {
   document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
-  const d = Object.assign({}, DATA[lang], mode === "iam" ? IAM[lang] : {});
+  const d = DATA[lang];
   document.querySelectorAll("[data-i]").forEach(el => {
     const k = el.getAttribute("data-i");
     if (d[k] != null) el.innerHTML = d[k];
@@ -769,6 +807,13 @@ function render() {
     b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false"));
 
   // timeline
+  document.getElementById("bridge").innerHTML = BRIDGE.map(b => `
+    <div class="side">
+      <span class="k">${b[lang].k}</span>
+      <h3>${b[lang].h}</h3>
+      <ul>${b[lang].items.map(i => `<li>${i}</li>`).join("")}</ul>
+    </div>`).join("");
+
   document.getElementById("fund").innerHTML = FUND.map(f => `
     <div class="fund-card">
       <h3>${f[lang].t}</h3>
@@ -843,11 +888,6 @@ document.getElementById("copyMail").addEventListener("click", async (e) => {
   } catch(err) {
     const r = document.createRange(); r.selectNode(btn.previousSibling || btn);
   }
-});
-
-window.addEventListener("hashchange", () => {
-  mode = location.hash === "#iam" ? "iam" : "pentest";
-  render();
 });
 
 // init

@@ -1,11 +1,9 @@
 # Ryan Azanha — Portfólio
 
-Portfólio pessoal bilíngue (PT/EN) de Ryan Azanha, Analista de Pentest / Red Team com base em Gestão de Identidades e Acessos (IAM/IGA).
+Portfólio pessoal bilíngue (PT/EN) de Ryan Azanha, Analista de IAM e Pentest / Red Team.
 
 - Site estático: um único `index.html`, sem build e sem dependências.
 - Seletor **POR | ENG** no topo; a escolha fica salva no navegador.
-- Versão com foco em IAM: abra o site com `#iam` no final do endereço
-  (ex.: `https://ryanazanha.github.io/#iam`).
 
 ## Rodar localmente
 
@@ -29,7 +27,7 @@ Todo o texto fica no `<script>` do final do `index.html`:
 | O que mudar | Onde |
 |---|---|
 | Textos gerais (hero, títulos) | `DATA.pt` e `DATA.en` |
-| Versão IAM do topo | `IAM.pt` e `IAM.en` |
+| Cards "Em um time de IAM / ofensivo" | `BRIDGE` |
 | Fundamentos | `FUND` |
 | Experiência (ordenada por `start`) | `JOBS` |
 | Projetos | `PROJECTS` |

@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ryan Azanha — Analista de Pentest / Red Team com base em Gestão de Identidades e Acessos (IAM).">
+<meta property="og:title" content="Ryan Azanha">
+<meta property="og:description" content="Analista de Pentest / Red Team · IAM / IGA">
+<title>Ryan Azanha</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>
+  /* Layout: single-column reading spine, left-rule timeline, terminal-accented section eyebrows */
+  :root {
+    --bg: #f5f6f4;
+    --surface: #ffffff;
+    --surface-2: #eceee9;
+    --fg: #1a1d1a;
+    --muted: #596158;
+    --faint: #878f85;
+    --rule: #d7dad3;
+    --accent: #1f7a52;
+    --accent-soft: #e3efe7;
+    --crit: #b4472e;
+    --warn: #a9791a;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    --maxw: 50rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c0f0d;
+      --surface: #141815;
+      --surface-2: #1b201c;
+      --fg: #e7eae5;
+      --muted: #9aa49a;
+      --faint: #6b746b;
+      --rule: #272d27;
+      --accent: #4bd08a;
+      --accent-soft: #15241b;
+      --crit: #e8745a;
+      --warn: #d7a53f;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0c0f0d;
+    --surface: #141815;
+    --surface-2: #1b201c;
+    --fg: #e7eae5;
+    --muted: #9aa49a;
+    --faint: #6b746b;
+    --rule: #272d27;
+    --accent: #4bd08a;
+    --accent-soft: #15241b;
+    --crit: #e8745a;
+    --warn: #d7a53f;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-size: 15px;
+    margin: 0;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    z-index: 30;
+    background: var(--bg);
+  }
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  /* ---- top bar ---- */
+  header.bar {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar-in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.7rem;
+  }
+  .brand {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .brand .dot { color: var(--accent); }
+  .lang {
+    display: inline-flex;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .lang button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--faint);
+    padding: 0.28rem 0.7rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: 0.04em;
+    transition: color .15s, background .15s;
+  }
+  .lang button[aria-pressed="true"] {
+    background: var(--accent);
+    color: #04140c;
+    font-weight: 600;
+  }
+  :root[data-theme="dark"] .lang button[aria-pressed="true"],
+  :root:not([data-theme="light"]) .lang button[aria-pressed="true"] { color: #04140c; }
+
+  /* ---- hero ---- */
+  .hero { padding-block: clamp(2.5rem, 7vw, 4.5rem) 2rem; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.1rem;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.4rem;
+    height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-size: clamp(2.2rem, 7vw, 3.4rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.6rem;
+    text-wrap: balance;
+    font-weight: 600;
+  }
+  .role {
+    font-family: var(--mono);
+    font-size: clamp(0.95rem, 3vw, 1.15rem);
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+  }
+  .role b { color: var(--fg); font-weight: 600; }
+  .lead {
+    font-size: 1.08rem;
+    color: var(--muted);
+    max-width: 38rem;
+    margin: 0 0 1.8rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--fg);
+    transition: border-color .15s, transform .15s;
+  }
+  .chip:hover { border-color: var(--accent); text-decoration: none; transform: translateY(-1px); }
+  .chip svg { width: 15px; height: 15px; flex: none; }
+
+  /* ---- sections ---- */
+  section { padding-block: clamp(2.2rem, 6vw, 3.4rem); border-top: 1px solid var(--rule); }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 1.8rem;
+  }
+  .sec-no {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--faint);
+  }
+  h2 {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    letter-spacing: -0.02em;
+    margin: 0;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  .sec-intro { color: var(--muted); max-width: 40rem; margin: -0.6rem 0 1.8rem; }
+
+  /* ---- about tool grid ---- */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+    gap: 0.5rem;
+  }
+  .stack-col h3 {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    margin: 0 0 0.7rem;
+    font-weight: 600;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .about-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: 1.6rem 2rem;
+  }
+
+  /* ---- fundamentals ---- */
+  .fund {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: 0.7rem;
+  }
+  .fund-card {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-width: 0;
+  }
+  .fund-card h3 { margin: 0; font-size: 1rem; font-weight: 600; }
+  .fund-card p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
+  .fund-card .src-list { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: auto; padding-top: 0.2rem; }
+
+  /* ---- timeline ---- */
+  .tl { display: flex; flex-direction: column; gap: 0; }
+  .job {
+    position: relative;
+    padding: 0 0 2rem 1.6rem;
+    border-left: 1px solid var(--rule);
+  }
+  .job:last-child { padding-bottom: 0; }
+  .job::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 0.45rem;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+  .job .when {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--faint);
+    letter-spacing: 0.02em;
+  }
+  .job h3 {
+    margin: 0.3rem 0 0.1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .job .org { color: var(--accent); font-family: var(--mono); font-size: 0.82rem; margin-bottom: 0.7rem; }
+  .job ul { margin: 0; padding-left: 1.05rem; color: var(--muted); font-size: 0.95rem; }
+  .job li { margin-bottom: 0.4rem; }
+  .job li b { color: var(--fg); font-weight: 600; }
+
+  /* ---- projects ---- */
+  .proj {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 1.3rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .proj h3 { margin: 0 0 0.3rem; font-size: 1.12rem; font-weight: 600; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;}
+  .proj p { color: var(--muted); margin: 0 0 0.9rem; font-size: 0.96rem; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .pill {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- labs matrix ---- */
+  .labs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: 0.6rem;
+  }
+  .lab {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    background: var(--surface);
+  }
+  .lab .cls {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+  .lab h4 { margin: 0 0 0.3rem; font-size: 0.92rem; font-weight: 600; }
+  .lab p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.45; }
+
+  /* ---- certs ---- */
+  .cert-grid { display: grid; grid-template-columns: 1fr; gap: 1.6rem; }
+  @media (min-width: 560px) { .cert-grid { grid-template-columns: 1fr 1fr; } }
+  .cert-grid h3 {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    margin: 0 0 0.9rem;
+    font-weight: 600;
+  }
+  .cert-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+  .cert-list li { display: flex; gap: 0.6rem; align-items: baseline; font-size: 0.92rem; }
+  .cert-list .mk { font-family: var(--mono); color: var(--accent); flex: none; font-size: 0.8rem; }
+  .cert-list .src { color: var(--faint); font-family: var(--mono); font-size: 0.72rem; }
+  /* roadmap */
+  .road { display: flex; flex-direction: column; gap: 0; }
+  .road-step {
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+    font-size: 0.92rem;
+    padding: 0.4rem 0;
+  }
+  .road-step .idx { font-family: var(--mono); font-size: 0.72rem; color: var(--faint); width: 1.4rem; flex: none; }
+  .road-step .nm { font-weight: 600; }
+  .road-step .st {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+  }
+  .st.now { background: var(--accent-soft); color: var(--accent); }
+  .st.next { background: var(--surface-2); color: var(--muted); }
+
+  /* ---- footer ---- */
+  footer { padding-block: 2.6rem 3rem; border-top: 1px solid var(--rule); color: var(--muted); }
+  footer .f-links { display: flex; flex-wrap: wrap; gap: 0.8rem 1.4rem; margin-bottom: 1.2rem; font-family: var(--mono); font-size: 0.85rem; }
+  .copybox {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--mono); font-size: 0.82rem;
+    background: var(--surface-2); border: 1px solid var(--rule);
+    border-radius: 8px; padding: 0.3rem 0.3rem 0.3rem 0.7rem;
+  }
+  .copybox button {
+    appearance: none; border: 0; cursor: pointer;
+    background: var(--surface); color: var(--muted);
+    border-radius: 6px; padding: 0.3rem 0.55rem; font-family: var(--mono); font-size: 0.72rem;
+  }
+  .copybox button:hover { color: var(--accent); }
+  .foot-note { font-size: 0.78rem; color: var(--faint); margin-top: 1.4rem; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap bar-in">
+    <span class="brand"><span class="dot">▍</span>Ryan Azanha</span>
+    <div class="lang" role="group" aria-label="Language / Idioma">
+      <button type="button" data-lang="pt" aria-pressed="true">POR</button>
+      <button type="button" data-lang="en" aria-pressed="false">ENG</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" style="border-top:0">
+    <div class="eyebrow" data-i="hero.eyebrow"></div>
+    <h1>Ryan Azanha</h1>
+    <p class="role" data-i="hero.role"></p>
+    <p class="lead" data-i="hero.lead"></p>
+    <div class="links">
+      <a class="chip" href="https://www.linkedin.com/in/ryan-azanha" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.82-2.05 3.75-2.05 4 0 4.75 2.63 4.75 6.05V21H19v-5.3c0-1.26-.02-2.9-1.76-2.9-1.76 0-2.03 1.37-2.03 2.8V21H9z"/></svg>
+        LinkedIn
+      </a>
+      <a class="chip" href="https://github.com/RyanAzanha" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.38.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg>
+        GitHub
+      </a>
+      <span class="copybox">ryan.azanha1@gmail.com
+        <button type="button" id="copyMail" data-i="btn.copy"></button>
+      </span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-no">01</span><h2 data-i="about.h"></h2></div>
+    <p class="sec-intro" data-i="about.p"></p>
+    <div class="about-cols">
+      <div class="stack-col">
+        <h3 data-i="about.iam"></h3>
+        <div class="tags">
+          <span class="tag">SailPoint</span><span class="tag">CyberArk</span><span class="tag">Active Directory</span>
+          <span class="tag">Entra ID / PIM</span><span class="tag">AWS IAM</span><span class="tag">GCP IAM</span>
+          <span class="tag">IBM Cloud</span><span class="tag">Kafka</span><span class="tag">Jira</span>
+        </div>
+      </div>
+      <div class="stack-col">
+        <h3 data-i="about.off"></h3>
+        <div class="tags">
+          <span class="tag">Nmap</span><span class="tag">Burp Suite</span><span class="tag">Netcat / Ncat</span>
+          <span class="tag">Hydra</span><span class="tag">John / Hashcat</span><span class="tag">Kali Linux</span>
+          <span class="tag">Python</span><span class="tag">PowerShell</span><span class="tag">Bash</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-no">02</span><h2 data-i="fund.h"></h2></div>
+    <p class="sec-intro" data-i="fund.p"></p>
+    <div class="fund" id="fund"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-no">03</span><h2 data-i="exp.h"></h2></div>
+    <div class="tl" id="tl"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-no">04</span><h2 data-i="proj.h"></h2></div>
+    <div id="proj"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-no">05</span><h2 data-i="labs.h"></h2></div>
+    <p class="sec-intro" data-i="labs.p"></p>
+    <div class="labs" id="labs"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-no">06</span><h2 data-i="edu.h"></h2></div>
+    <div class="tl" id="edu"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-no">07</span><h2 data-i="cert.h"></h2></div>
+    <div class="cert-grid">
+      <div>
+        <h3 data-i="cert.done"></h3>
+        <ul class="cert-list" id="certDone"></ul>
+      </div>
+      <div>
+        <h3 data-i="cert.road"></h3>
+        <div class="road" id="road"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="f-links">
+    <a href="https://www.linkedin.com/in/ryan-azanha" target="_blank" rel="noopener">→ LinkedIn</a>
+    <a href="https://github.com/RyanAzanha" target="_blank" rel="noopener">→ GitHub</a>
+    <a href="mailto:ryan.azanha1@gmail.com">→ ryan.azanha1@gmail.com</a>
+  </div>
+  <div class="foot-note" data-i="foot.note"></div>
+</footer>
+
+<script>
+const DATA = {
+  pt: {
+    "hero.eyebrow": "Analista de Pentest / Red Team",
+    "hero.role": "Segurança ofensiva com base sólida em <b>Gestão de Identidades e Acessos</b>",
+    "hero.lead": "Analista de Pentest e Red Team com background em IAM/IGA. Trabalhei com CyberArk, Active Directory, Entra ID, AWS, GCP, SailPoint, Kafka e Jira em ambientes corporativos multi-cloud — o que me dá uma visão prática de como o acesso é concedido, administrado e, principalmente, de como ele falha. Hoje foco em segurança ofensiva: laboratórios práticos, relatório de pentest completo e uma trilha de certificações em andamento.",
+    "btn.copy": "copiar",
+    "btn.copied": "copiado ✓",
+    "about.h": "Perfil",
+    "about.p": "Quem administrou identidade e acesso privilegiado em escala conhece por dentro os alvos que um time ofensivo mais explora: credenciais, privilégios e movimentação lateral. Uso esse conhecimento dos dois lados — entendo o controle que defendo e o controle que testo.",
+    "about.iam": "Identidade & Acesso",
+    "about.off": "Ofensivo",
+    "fund.h": "Fundamentos",
+    "fund.p": "Base sólida nos fundamentos de segurança da informação, construída em três frentes: formação acadêmica, cursos especializados e prática no trabalho.",
+    "exp.h": "Experiência",
+    "proj.h": "Projetos",
+    "labs.h": "Laboratórios práticos",
+    "labs.p": "Oito laboratórios do curso Introdução ao Hacking e Pentest 3.0 (Solyd), cada um focado em uma classe de vulnerabilidade. Resumo das habilidades demonstradas — sem soluções nem flags.",
+    "edu.h": "Formação",
+    "cert.h": "Certificações e cursos",
+    "cert.done": "Concluídos",
+    "cert.road": "Trilha em andamento",
+    "foot.note": "Portfólio construído por Ryan Azanha. Conteúdo dos projetos corporativos apresentado de forma anonimizada, sem dados, sistemas internos ou credenciais de clientes."
+  },
+  en: {
+    "hero.eyebrow": "Penetration Tester / Red Team Analyst",
+    "hero.role": "Offensive security built on a solid <b>Identity & Access Management</b> foundation",
+    "hero.lead": "Penetration Tester and Red Team analyst with an IAM/IGA background. I've worked with CyberArk, Active Directory, Entra ID, AWS, GCP, SailPoint, Kafka and Jira across multi-cloud enterprise environments — which gives me a hands-on view of how access is granted, managed and, above all, how it breaks. My focus today is offensive security: hands-on labs, a full penetration-test report and an ongoing certification track.",
+    "btn.copy": "copy",
+    "btn.copied": "copied ✓",
+    "about.h": "Profile",
+    "about.p": "Managing identity and privileged access at scale means knowing, from the inside, the very targets an offensive team goes after: credentials, privileges and lateral movement. I bring that knowledge to both sides — I understand the control I defend and the control I test.",
+    "about.iam": "Identity & Access",
+    "about.off": "Offensive",
+    "fund.h": "Fundamentals",
+    "fund.p": "A solid grounding in information-security fundamentals, built on three fronts: academic education, specialized courses and on-the-job practice.",
+    "exp.h": "Experience",
+    "proj.h": "Projects",
+    "labs.h": "Hands-on labs",
+    "labs.p": "Eight labs from the Introduction to Hacking and Pentest 3.0 course (Solyd), each focused on one vulnerability class. A summary of the skills demonstrated — no solutions, no flags.",
+    "edu.h": "Education",
+    "cert.h": "Certifications & courses",
+    "cert.done": "Completed",
+    "cert.road": "Ongoing track",
+    "foot.note": "Portfolio built by Ryan Azanha. Corporate project content is shown in anonymized form, with no client data, internal systems or credentials."
+  }
+};
+
+const JOBS = [
+  {
+    start: "2025-11",
+    when: { pt: "nov 2025 — ago 2026", en: "Nov 2025 — Aug 2026" },
+    pt: { role: "Analista de Gestão de Identidades e Acessos II", org: "Strong Security Brasil",
+      bullets: [
+        "Atendimento de <b>mais de 2.000 chamados</b> na fila de IAM do Google Cloud Platform, com <b>+60% de eficiência</b> a partir de uma solução de automação desenvolvida do zero em Python, reduzindo o tempo de resposta e garantindo aderência aos SLAs.",
+        "Implementação e gestão de controles de acesso baseados em roles (RBAC) em ambientes GCP, minimizando riscos de acessos indevidos.",
+        "Gestão ponta a ponta de identidades e acessos privilegiados (PAM) com SailPoint, em ambiente multi-cloud: Azure (incluindo PIM), AWS, GCP e IBM Cloud.",
+        "Automações em Python, PowerShell e Microsoft Graph API para fluxos de IAM/IGA, reduzindo esforço manual e tempo de provisionamento/desprovisionamento.",
+        "Suporte técnico de Nível II em demandas de IAM/IGA/PAM e incidentes críticos de identidade e acesso."
+      ] },
+    en: { role: "Identity & Access Management Analyst II", org: "Strong Security Brasil",
+      bullets: [
+        "Handled <b>2,000+ tickets</b> in the Google Cloud Platform IAM queue, with a <b>60% efficiency gain</b> from an automation solution built from scratch in Python, cutting response time and keeping SLAs on target.",
+        "Implemented and managed role-based access control (RBAC) in GCP environments, minimizing the risk of improper access.",
+        "End-to-end management of identities and privileged access (PAM) with SailPoint across multi-cloud: Azure (including PIM), AWS, GCP and IBM Cloud.",
+        "Built automations in Python, PowerShell and Microsoft Graph API for IAM/IGA flows, reducing manual effort and provisioning/deprovisioning time.",
+        "Level II technical support for IAM/IGA/PAM demands and critical identity-and-access incidents."
+      ] }
+  },
+  {
+    start: "2026-07",
+    when: { pt: "jul 2026 — out 2026", en: "Jul 2026 — Oct 2026" },
+    pt: { role: "Analista de Gestão de Acessos — Projeto NaturaPay", org: "via Verx Tecnologia (PJ)",
+      bullets: [
+        "Assumi uma fila com <b>mais de 100 chamados</b> acumulados e, em poucas semanas, criei um fluxo de automação que <b>zerou a fila</b>.",
+        "A demanda, antes de ~40 chamados/dia, passou a ser resolvida com rapidez: chamados <b>não passavam de 1h na fila</b> após aprovação do gestor e da equipe técnica de segurança.",
+        "Gestão de acessos sistêmicos com Azure AD, AWS IAM, Google Cloud e SailPoint, com controle de SLAs via Jira."
+      ] },
+    en: { role: "Access Management Analyst — NaturaPay Project", org: "via Verx Tecnologia (contractor)",
+      bullets: [
+        "Took over a backlog of <b>100+ tickets</b> and, within a few weeks, built an automation flow that <b>cleared the queue</b>.",
+        "Demand that was ~40 tickets/day began to be resolved fast: tickets <b>stayed under 1h in the queue</b> once approved by the user's manager and the security team.",
+        "Managed systemic access with Azure AD, AWS IAM, Google Cloud and SailPoint, tracking SLAs in Jira."
+      ] }
+  },
+  {
+    start: "2024-07",
+    when: { pt: "jul 2024 — fev 2025", en: "Jul 2024 — Feb 2025" },
+    pt: { role: "Estágio em Segurança da Informação", org: "Cherokee",
+      bullets: [
+        "Identificação e remoção de <b>dados sensíveis expostos na internet</b> via técnicas de Google Hacking (OSINT).",
+        "Gestão de vulnerabilidades e atualizações de segurança em endpoints com a plataforma Action1.",
+        "Suporte técnico na análise da <b>infraestrutura exposta</b>.",
+        "Desenvolvimento e avaliação de <b>campanhas de phishing</b>; análise de eventos de DLP.",
+        "Criação e monitoramento de dashboards personalizados no Grafana; gestão de acessos e service desk."
+      ] },
+    en: { role: "Information Security Intern", org: "Cherokee",
+      bullets: [
+        "Identified and removed <b>sensitive data exposed on the internet</b> using Google Hacking (OSINT) techniques.",
+        "Vulnerability and security-patch management on endpoints with the Action1 platform.",
+        "Technical support in <b>exposed-infrastructure analysis</b>.",
+        "Built and evaluated <b>phishing campaigns</b>; analyzed DLP events.",
+        "Built and monitored custom Grafana dashboards; access management and service desk."
+      ] }
+  }
+];
+
+const PROJECTS = [
+  {
+    pt: { title: "Relatório de Pentest — Aplicação Web", desc: "Pentest completo de uma aplicação web, documentado em relatório profissional e anonimizado. Metodologia NIST SP 800-115 e OWASP, achados classificados por CVSS 3.1, provas de conceito não destrutivas, plano de remediação e critérios de reteste. Publicado no LinkedIn sem expor o cliente.",
+      tags: ["NIST 800-115", "OWASP", "CVSS 3.1", "Relatório"] },
+    en: { title: "Penetration Test Report — Web Application", desc: "Full web-application pentest, documented in a professional, anonymized report. NIST SP 800-115 and OWASP methodology, findings scored with CVSS 3.1, non-destructive proofs of concept, a remediation plan and retest criteria. Published on LinkedIn without exposing the client.",
+      tags: ["NIST 800-115", "OWASP", "CVSS 3.1", "Report"] }
+  },
+  {
+    pt: { title: "Automação de fluxos de IAM", desc: "Automações construídas do zero para operação de IAM/IGA em cloud. A solução para o shell do GCP, em Python, foi o diferencial que reduziu drasticamente o tempo de atendimento de chamados; outras usam PowerShell e Microsoft Graph API para provisionamento e desprovisionamento de acessos. (Código apresentado em versão genérica, sem dados de cliente.)",
+      tags: ["Python", "PowerShell", "Graph API", "GCP"] },
+    en: { title: "IAM workflow automation", desc: "Automations built from scratch for cloud IAM/IGA operations. The GCP shell solution, in Python, was the differentiator that sharply cut ticket-handling time; others use PowerShell and Microsoft Graph API for access provisioning and deprovisioning. (Code shown in generic form, with no client data.)",
+      tags: ["Python", "PowerShell", "Graph API", "GCP"] }
+  },
+  {
+    pt: { title: "Ferramenta de scan de rede em Shell Script", desc: "Scanner de rede desenvolvido como projeto prático do curso de pentest, escrito em Shell Script. Enumera hosts e serviços ativos, consolidando o aprendizado de redes, Netcat e automação de linha de comando.",
+      tags: ["Bash", "Netcat", "Enumeração"] },
+    en: { title: "Shell-script network scanner", desc: "A network scanner built as a hands-on course project, written in Shell Script. It enumerates live hosts and services, consolidating what I learned about networking, Netcat and command-line automation.",
+      tags: ["Bash", "Netcat", "Enumeration"] }
+  }
+];
+
+const LABS = [
+  { cls: "Linux / Enumeração", clsEn: "Linux / Enumeration",
+    pt: { t: "Fundamentos de Linux", d: "Orientação em um sistema sem interface: listagem, arquivos ocultos por convenção, permissões e reconhecimento de conteúdo codificado versus cifrado." },
+    en: { t: "Linux fundamentals", d: "Finding my way around a headless system: listing, files hidden by convention, permissions, and telling encoded content from encrypted." } },
+  { cls: "Content Discovery", clsEn: "Content Discovery",
+    pt: { t: "Descoberta de conteúdo web", d: "Levantamento de superfície: mapeamento de recursos e diretórios do servidor que não são referenciados por nenhum link da página inicial." },
+    en: { t: "Web content discovery", d: "Surface mapping: finding server resources and directories that no link on the homepage points to." } },
+  { cls: "Recon → Foothold", clsEn: "Recon → Foothold",
+    pt: { t: "Do scan ao acesso", d: "Enumeração de serviços de um host legado fora de inventário, identificação do que cada serviço entrega e obtenção de acesso inicial como usuário do servidor web." },
+    en: { t: "From scan to access", d: "Enumerating services on a legacy, off-inventory host, identifying what each one exposes, and gaining initial access as the web-server user." } },
+  { cls: "SQL Injection", clsEn: "SQL Injection",
+    pt: { t: "Extração de banco de dados", d: "Teste black-box de um e-commerce com consultas ao banco mal construídas, levando à extração de dados via injeção de SQL." },
+    en: { t: "Database extraction", d: "Black-box testing of an e-commerce app with poorly built database queries, leading to data extraction via SQL injection." } },
+  { cls: "XSS / Sessão", clsEn: "XSS / Session",
+    pt: { t: "Roubo de sessão", d: "Mural público sem sanitização de entrada: exploração de Cross-Site Scripting para alcançar uma área administrativa protegida apenas por cookie." },
+    en: { t: "Session theft", d: "A public board with no input sanitization: Cross-Site Scripting used to reach an admin area protected only by a cookie." } },
+  { cls: "Path Traversal", clsEn: "Path Traversal",
+    pt: { t: "Leitura de arquivos do servidor", d: "Parâmetro que aceita nome de arquivo sem validação: travessia de diretório para ler conteúdo fora da pasta pretendida." },
+    en: { t: "Server file read", d: "A parameter that accepts a filename without validation: directory traversal to read content outside the intended folder." } },
+  { cls: "Rede interna", clsEn: "Internal network",
+    pt: { t: "Pivô para a rede interna", d: "A partir de um servidor com saída para a internet, alcance de um painel de operações em rede sem rota externa — que não deveria ser acessível." },
+    en: { t: "Pivot to the internal network", d: "From an internet-facing server, reaching an operations panel on a network with no external route — one that should not be reachable." } },
+  { cls: "Broken Access / IDOR", clsEn: "Broken Access / IDOR",
+    pt: { t: "Controle de acesso na API", d: "Teste autenticado de uma API: a interface só mostra ações sobre o que é do usuário, mas o back-end não valida a autorização da mesma forma." },
+    en: { t: "API access control", d: "Authenticated API testing: the UI only shows actions on what belongs to the user, but the back-end doesn't enforce authorization the same way." } }
+];
+
+const EDU = [
+  { when: { pt: "ago 2025 — atual", en: "Aug 2025 — present" },
+    pt: { role: "Graduação em Defesa Cibernética", org: "FIAP",
+      bullets: ["Fundamentos de segurança da informação, Cyber Threat Intelligence e segurança ofensiva. Ao fim do primeiro ano, realizei um pentest completo em aplicação de teste e produzi o relatório profissional."] },
+    en: { role: "Bachelor in Cyber Defense", org: "FIAP",
+      bullets: ["Information-security fundamentals, Cyber Threat Intelligence and offensive security. At the end of the first year I ran a full pentest on a test application and produced the professional report."] } },
+  { when: { pt: "ago 2023 — ago 2025", en: "Aug 2023 — Aug 2025" },
+    pt: { role: "Análise e Desenvolvimento de Sistemas", org: "FIAP",
+      bullets: ["Base em desenvolvimento, lógica de programação e sistemas, que sustenta o lado técnico do trabalho ofensivo e das automações."] },
+    en: { role: "Systems Analysis and Development", org: "FIAP",
+      bullets: ["Foundation in development, programming logic and systems, underpinning the technical side of offensive work and automation."] } }
+];
+
+const CERT_DONE = [
+  { pt: "Inglês avançado — leitura, escrita e escuta", en: "Advanced English — reading, writing, listening", src: "" },
+  { pt: "Identity Governance and Administration Foundation (IGAF)", en: "Identity Governance and Administration Foundation (IGAF)", src: "CEC IAM Academy" },
+  { pt: "Google Cloud Associate Cloud Engineer", en: "Google Cloud Associate Cloud Engineer", src: "Udemy" },
+  { pt: "Introdução ao Hacking e Pentest 2.0 e 3.0", en: "Introduction to Hacking and Pentest 2.0 & 3.0", src: "Solyd" },
+  { pt: "Introdução ao Pentest na Prática · Primeiro Pentest", en: "Intro to Hands-on Pentest · First Pentest", src: "DESEC" },
+  { pt: "Formação Segurança Ofensiva", en: "Offensive Security track", src: "Alura" },
+  { pt: "Formação Redes de Computadores", en: "Computer Networks track", src: "Alura" },
+  { pt: "Formação Começando em Linux", en: "Getting Started with Linux track", src: "Alura" },
+  { pt: "Pré-segurança · Cibersegurança", en: "Pre-security · Cyber Security", src: "TryHackMe" }
+];
+
+const ROADMAP = [
+  { nm: "SYCP", pt: "Solyd Certified Pentester", en: "Solyd Certified Pentester", status: "now" },
+  { nm: "Security+", pt: "CompTIA SY0-701", en: "CompTIA SY0-701", status: "next" },
+  { nm: "DCPT", pt: "DESEC Certified Pentester", en: "DESEC Certified Pentester", status: "next" },
+  { nm: "eJPT", pt: "INE / eLearnSecurity", en: "INE / eLearnSecurity", status: "next" },
+  { nm: "OSCP", pt: "OffSec Certified Professional", en: "OffSec Certified Professional", status: "next" }
+];
+
+const FUND = [
+  {
+    pt: { t: "Redes de Computadores", d: "Modelo TCP/IP, endereçamento, roteamento, NAT e serviços de rede, aplicados à enumeração de hosts e à comunicação entre máquinas com Netcat, Ncat e Socat.",
+      src: ["Alura · Formação Redes", "FIAP", "Solyd · Redes para Pentest"] },
+    en: { t: "Computer Networks", d: "TCP/IP model, addressing, routing, NAT and network services, applied to host enumeration and machine-to-machine communication with Netcat, Ncat and Socat.",
+      src: ["Alura · Networks track", "FIAP", "Solyd · Networking for Pentest"] }
+  },
+  {
+    pt: { t: "Linux", d: "Operação pela linha de comando: sistema de arquivos, permissões, usuários, processos e automação com Shell Script voltada a pentest.",
+      src: ["Alura · Começando em Linux", "FIAP", "Solyd · Linux e Shell Script para Pentesters"] },
+    en: { t: "Linux", d: "Command-line operation: file system, permissions, users, processes and pentest-oriented automation with Shell Script.",
+      src: ["Alura · Getting Started with Linux", "FIAP", "Solyd · Linux & Shell Script for Pentesters"] }
+  },
+  {
+    pt: { t: "Programação", d: "Dois anos de graduação em Análise e Desenvolvimento de Sistemas, Python e Shell Script em ferramentas próprias e automações reais em produção com Python, PowerShell e Microsoft Graph API.",
+      src: ["FIAP · ADS", "Solyd · Python e Algoritmos", "Automações de IAM em produção"] },
+    en: { t: "Programming", d: "Two years of a Systems Analysis and Development degree, Python and Shell Script in my own tools, and real production automations with Python, PowerShell and Microsoft Graph API.",
+      src: ["FIAP · Systems Dev.", "Solyd · Python & Algorithms", "IAM automations in production"] }
+  },
+  {
+    pt: { t: "Segurança da Informação", d: "Pilares da SI, gestão de vulnerabilidades, criptografia, hash e senhas, controle de acesso e frameworks como NIST SP 800-115, OWASP e CVSS.",
+      src: ["FIAP · Defesa Cibernética", "Solyd · Criptografia e Senhas", "Estudo CompTIA Security+"] },
+    en: { t: "Information Security", d: "Core security principles, vulnerability management, cryptography, hashing and passwords, access control, and frameworks such as NIST SP 800-115, OWASP and CVSS.",
+      src: ["FIAP · Cyber Defense", "Solyd · Cryptography & Passwords", "CompTIA Security+ study"] }
+  }
+];
+
+/* IAM-focused version of the hero, shown at the #iam link */
+const IAM = {
+  pt: {
+    "hero.eyebrow": "Analista de IAM / IGA",
+    "hero.role": "Gestão de Identidades e Acessos com visão de <b>segurança ofensiva</b>",
+    "hero.lead": "Analista de Gestão de Identidades e Acessos com experiência em SailPoint, CyberArk, Active Directory, Entra ID (PIM), AWS, GCP, IBM Cloud, Kafka e Jira em ambientes multi-cloud. Automatizo fluxos de IAM com Python, PowerShell e Microsoft Graph API: mais de 2.000 chamados atendidos com +60% de eficiência e uma fila de 100+ chamados zerada em poucas semanas. A formação em pentest me dá o olhar do atacante sobre onde o acesso costuma falhar.",
+    "about.p": "Conheço identidade dos dois lados. Administro o ciclo de vida de acessos e privilégios e, pela formação em segurança ofensiva, entendo como credenciais expostas, privilégios excessivos e falhas de RBAC são explorados. Isso me ajuda a desenhar e manter controles que resistem a um ataque real."
+  },
+  en: {
+    "hero.eyebrow": "IAM / IGA Analyst",
+    "hero.role": "Identity & Access Management with an <b>offensive-security</b> mindset",
+    "hero.lead": "Identity and Access Management analyst with hands-on experience in SailPoint, CyberArk, Active Directory, Entra ID (PIM), AWS, GCP, IBM Cloud, Kafka and Jira across multi-cloud environments. I automate IAM workflows with Python, PowerShell and Microsoft Graph API: 2,000+ tickets handled with a 60% efficiency gain, and a 100+ ticket backlog cleared within weeks. My pentest training gives me an attacker's view of where access tends to break.",
+    "about.p": "I know identity from both sides. I manage the lifecycle of access and privileges and, through my offensive-security training, I understand how exposed credentials, excessive privileges and RBAC gaps get exploited. That helps me design and run controls that hold up against a real attack."
+  }
+};
+
+let lang = "pt";
+let mode = location.hash === "#iam" ? "iam" : "pentest";
+
+function render() {
+  document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+  const d = Object.assign({}, DATA[lang], mode === "iam" ? IAM[lang] : {});
+  document.querySelectorAll("[data-i]").forEach(el => {
+    const k = el.getAttribute("data-i");
+    if (d[k] != null) el.innerHTML = d[k];
+  });
+  document.querySelectorAll(".lang button").forEach(b =>
+    b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false"));
+
+  // timeline
+  document.getElementById("fund").innerHTML = FUND.map(f => `
+    <div class="fund-card">
+      <h3>${f[lang].t}</h3>
+      <p>${f[lang].d}</p>
+      <div class="src-list">${f[lang].src.map(s => `<span class="tag">${s}</span>`).join("")}</div>
+    </div>`).join("");
+
+  // experience: oldest first
+  document.getElementById("tl").innerHTML = [...JOBS].sort((a, b) => a.start.localeCompare(b.start)).map(j => `
+    <div class="job">
+      <div class="when">${j.when[lang]}</div>
+      <h3>${j[lang].role}</h3>
+      <div class="org">${j[lang].org}</div>
+      <ul>${j[lang].bullets.map(b => `<li>${b}</li>`).join("")}</ul>
+    </div>`).join("");
+
+  // projects
+  document.getElementById("proj").innerHTML = PROJECTS.map(p => `
+    <div class="proj">
+      <h3>${p[lang].title}</h3>
+      <p>${p[lang].desc}</p>
+      <div class="meta-row">${p[lang].tags.map(t => `<span class="pill">${t}</span>`).join("")}</div>
+    </div>`).join("");
+
+  // labs
+  document.getElementById("labs").innerHTML = LABS.map(l => `
+    <div class="lab">
+      <span class="cls">${lang === "pt" ? l.cls : l.clsEn}</span>
+      <h4>${l[lang].t}</h4>
+      <p>${l[lang].d}</p>
+    </div>`).join("");
+
+  // education
+  document.getElementById("edu").innerHTML = EDU.map(j => `
+    <div class="job">
+      <div class="when">${j.when[lang]}</div>
+      <h3>${j[lang].role}</h3>
+      <div class="org">${j[lang].org}</div>
+      <ul>${j[lang].bullets.map(b => `<li>${b}</li>`).join("")}</ul>
+    </div>`).join("");
+
+  // certs
+  document.getElementById("certDone").innerHTML = CERT_DONE.map(c => `
+    <li><span class="mk">▸</span><span>${c[lang]}${c.src ? ` <span class="src">· ${c.src}</span>` : ""}</span></li>`).join("");
+
+  document.getElementById("road").innerHTML = ROADMAP.map((r, i) => `
+    <div class="road-step">
+      <span class="idx">${String(i+1).padStart(2,"0")}</span>
+      <span><span class="nm">${r.nm}</span> <span class="src" style="color:var(--faint);font-family:var(--mono);font-size:.72rem">· ${r[lang]}</span></span>
+      <span class="st ${r.status}">${r.status === "now" ? (lang==="pt"?"estudando":"studying") : (lang==="pt"?"próxima":"next")}</span>
+    </div>`).join("");
+}
+
+function setLang(l) {
+  lang = l;
+  try { localStorage.setItem("ra_lang", l); } catch(e) {}
+  render();
+}
+
+document.querySelectorAll(".lang button").forEach(b =>
+  b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+document.getElementById("copyMail").addEventListener("click", async (e) => {
+  const btn = e.currentTarget;
+  try {
+    await navigator.clipboard.writeText("ryan.azanha1@gmail.com");
+    btn.textContent = DATA[lang]["btn.copied"];
+    setTimeout(() => btn.textContent = DATA[lang]["btn.copy"], 1600);
+  } catch(err) {
+    const r = document.createRange(); r.selectNode(btn.previousSibling || btn);
+  }
+});
+
+window.addEventListener("hashchange", () => {
+  mode = location.hash === "#iam" ? "iam" : "pentest";
+  render();
+});
+
+// init
+(function init(){
+  let saved = null;
+  try { saved = localStorage.getItem("ra_lang"); } catch(e) {}
+  if (saved === "pt" || saved === "en") lang = saved;
+  else if (navigator.language && navigator.language.toLowerCase().startsWith("en")) lang = "en";
+  render();
+})();
+</script>
+
+</body>
+</html>

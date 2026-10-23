@@ -113,6 +113,57 @@
     gap: 0.5rem;
   }
   .brand .dot { color: var(--accent); }
+  .brand:hover { text-decoration: none; }
+  .bar-in { max-width: 64rem; }
+  .bar-end { display: flex; align-items: center; gap: 0.6rem; }
+  .nav { display: flex; gap: 0.15rem; font-family: var(--mono); font-size: 0.76rem; }
+  .nav a {
+    color: var(--muted);
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    transition: color .15s, background .15s;
+  }
+  .nav a:hover { color: var(--fg); background: var(--surface-2); text-decoration: none; }
+  .nav a[aria-current="true"] { color: var(--accent); background: var(--accent-soft); }
+  .menu-btn {
+    display: none;
+    appearance: none;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    color: var(--fg);
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+  .menu-btn svg { width: 18px; height: 18px; }
+  .menu-btn .x { display: none; }
+  .menu-btn[aria-expanded="true"] .x { display: block; }
+  .menu-btn[aria-expanded="true"] .bars { display: none; }
+  @media (max-width: 860px) {
+    .menu-btn { display: inline-flex; }
+    .nav {
+      display: none;
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem max(20px, env(safe-area-inset-left, 0px)) 0.9rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.9rem;
+    }
+    .nav.open { display: flex; }
+    .nav a { padding: 0.7rem 0.6rem; }
+  }
+  @media (min-width: 861px) {
+    .bar-in { display: grid; grid-template-columns: 1fr auto 1fr; }
+    .bar-end { justify-self: end; }
+  }
+  html { scroll-padding-top: 4.5rem; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
   .lang {
     display: inline-flex;
     font-family: var(--mono);
@@ -443,12 +494,26 @@
 </head>
 <body>
 
-<header class="bar">
+<header class="bar" id="top">
   <div class="wrap bar-in">
-    <span class="brand"><span class="dot">▍</span>Ryan Azanha</span>
-    <div class="lang" role="group" aria-label="Language / Idioma">
-      <button type="button" data-lang="pt" aria-pressed="true">POR</button>
-      <button type="button" data-lang="en" aria-pressed="false">ENG</button>
+    <a class="brand" href="#top" style="color:var(--fg)"><span class="dot" aria-hidden="true">▍</span>Ryan Azanha</a>
+    <nav class="nav" id="nav" aria-label="Seções">
+      <a href="#about" data-i="nav.about">Perfil</a>
+      <a href="#experience" data-i="nav.exp">Experiência</a>
+      <a href="#projects" data-i="nav.proj">Projetos</a>
+      <a href="#labs" data-i="nav.labs">Labs</a>
+      <a href="#certs" data-i="nav.cert">Certificações</a>
+      <a href="#contact" data-i="nav.contact">Contato</a>
+    </nav>
+    <div class="bar-end">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" data-i-label="nav.menu" aria-label="Abrir menu">
+        <svg class="bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-lang="pt" aria-pressed="true">POR</button>
+        <button type="button" data-lang="en" aria-pressed="false">ENG</button>
+      </div>
     </div>
   </div>
 </header>
@@ -474,7 +539,7 @@
     </div>
   </section>
 
-  <section>
+  <section id="about">
     <div class="sec-head"><span class="sec-no">01</span><h2 data-i="about.h"></h2></div>
     <p class="sec-intro" data-i="about.p"></p>
     <div class="bridge" id="bridge"></div>
@@ -498,34 +563,34 @@
     </div>
   </section>
 
-  <section>
+  <section id="fundamentals">
     <div class="sec-head"><span class="sec-no">02</span><h2 data-i="fund.h"></h2></div>
     <p class="sec-intro" data-i="fund.p"></p>
     <div class="fund" id="fund"></div>
   </section>
 
-  <section>
+  <section id="experience">
     <div class="sec-head"><span class="sec-no">03</span><h2 data-i="exp.h"></h2></div>
     <div class="tl" id="tl"></div>
   </section>
 
-  <section>
+  <section id="projects">
     <div class="sec-head"><span class="sec-no">04</span><h2 data-i="proj.h"></h2></div>
     <div id="proj"></div>
   </section>
 
-  <section>
+  <section id="labs">
     <div class="sec-head"><span class="sec-no">05</span><h2 data-i="labs.h"></h2></div>
     <p class="sec-intro" data-i="labs.p"></p>
     <div class="labs" id="labs"></div>
   </section>
 
-  <section>
+  <section id="education">
     <div class="sec-head"><span class="sec-no">06</span><h2 data-i="edu.h"></h2></div>
     <div class="tl" id="edu"></div>
   </section>
 
-  <section>
+  <section id="certs">
     <div class="sec-head"><span class="sec-no">07</span><h2 data-i="cert.h"></h2></div>
     <div class="cert-grid">
       <div>
@@ -557,6 +622,14 @@ const DATA = {
     "hero.lead": "Analista de Segurança da Informação com experiência prática em Gestão de Identidades e Acessos e formação em segurança ofensiva. Administrei identidades e acessos privilegiados em ambientes multi-cloud com SailPoint, CyberArk, Active Directory, Entra ID (PIM), AWS, GCP e IBM Cloud, e automatizei fluxos de IAM com Python, PowerShell e Microsoft Graph API: mais de 2.000 chamados com +60% de eficiência e uma fila de 100+ chamados zerada em poucas semanas. No lado ofensivo, tenho um relatório de pentest completo, laboratórios práticos e uma trilha de certificações rumo à OSCP.",
     "btn.copy": "copiar",
     "btn.copied": "copiado ✓",
+    "nav.about": "Perfil",
+    "nav.exp": "Experiência",
+    "nav.proj": "Projetos",
+    "nav.labs": "Labs",
+    "nav.cert": "Certificações",
+    "nav.contact": "Contato",
+    "nav.menu": "Abrir menu",
+    "nav.aria": "Seções",
     "about.h": "Perfil",
     "about.p": "IAM e segurança ofensiva olham para o mesmo alvo. Boa parte dos ataques reais passa por identidade: credenciais expostas, privilégios em excesso, contas esquecidas e RBAC mal desenhado. Como analista de IAM, sei como esses acessos são concedidos e administrados no dia a dia. Como pentester, estudo como eles são explorados. Uma frente melhora a outra.",
     "about.iam": "Identidade & Acesso",
@@ -579,6 +652,14 @@ const DATA = {
     "hero.lead": "Information Security analyst with hands-on Identity & Access Management experience and offensive-security training. I've managed identities and privileged access across multi-cloud environments with SailPoint, CyberArk, Active Directory, Entra ID (PIM), AWS, GCP and IBM Cloud, and automated IAM workflows with Python, PowerShell and Microsoft Graph API: 2,000+ tickets handled with a 60% efficiency gain, and a 100+ ticket backlog cleared within weeks. On the offensive side, I bring a full pentest report, hands-on labs and a certification track toward OSCP.",
     "btn.copy": "copy",
     "btn.copied": "copied ✓",
+    "nav.about": "Profile",
+    "nav.exp": "Experience",
+    "nav.proj": "Projects",
+    "nav.labs": "Labs",
+    "nav.cert": "Certifications",
+    "nav.contact": "Contact",
+    "nav.menu": "Open menu",
+    "nav.aria": "Sections",
     "about.h": "Profile",
     "about.p": "IAM and offensive security look at the same target. Many real attacks go through identity: exposed credentials, excessive privileges, forgotten accounts and poorly designed RBAC. As an IAM analyst, I know how that access is granted and managed day to day. As a pentester, I study how it gets exploited. Each side makes me better at the other.",
     "about.iam": "Identity & Access",
@@ -805,6 +886,9 @@ function render() {
   });
   document.querySelectorAll(".lang button").forEach(b =>
     b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false"));
+  document.querySelectorAll("[data-i-label]").forEach(el => el.setAttribute("aria-label", d[el.getAttribute("data-i-label")]));
+  document.querySelectorAll("[data-i-alt]").forEach(el => el.setAttribute("alt", d[el.getAttribute("data-i-alt")]));
+  document.getElementById("nav").setAttribute("aria-label", d["nav.aria"]);
 
   // timeline
   document.getElementById("bridge").innerHTML = BRIDGE.map(b => `
@@ -889,6 +973,29 @@ document.getElementById("copyMail").addEventListener("click", async (e) => {
     const r = document.createRange(); r.selectNode(btn.previousSibling || btn);
   }
 });
+
+// navigation: mobile menu + highlight of the visible section
+const nav = document.getElementById("nav");
+const menuBtn = document.getElementById("menuBtn");
+function setMenu(open) {
+  nav.classList.toggle("open", open);
+  menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+}
+menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
+nav.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && nav.classList.contains("open")) { setMenu(false); menuBtn.focus(); } });
+
+if ("IntersectionObserver" in window) {
+  const navLinks = [...nav.querySelectorAll("a")];
+  const visible = new Map();
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(en => visible.set(en.target.id, en.isIntersecting));
+    // the first visible section in page order wins
+    const current = navLinks.find(a => visible.get(a.hash.slice(1)));
+    navLinks.forEach(a => a.setAttribute("aria-current", a === current ? "true" : "false"));
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  navLinks.forEach(a => { const sec = document.querySelector(a.hash); if (sec) spy.observe(sec); });
+}
 
 // init
 (function init(){
